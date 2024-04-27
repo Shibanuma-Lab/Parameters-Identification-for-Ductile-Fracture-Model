@@ -40,11 +40,11 @@ Ensure that all code files and data files are located in the same folder. The in
 ##### Curves obtained from Tensile experiments (named as "Material name"+"_ss")
 ##### .bat file and UMAT(.f)
 ## 3. Configure Options: 
-Before running the Python file, some customization options can be modified. These options are available in the "EXE.py". Adjust these options according to specific requirements, such as setting jobnumber=3 for parallel mode or jobnumber=1 for normal mode, computing one job at a time.
+Before running the Python file, some customization options can be modified. These options are available in the "ALLEXE.py". Adjust these options according to specific requirements, such as setting jobnumber=3 for parallel mode or jobnumber=1 for normal mode, computing one job at a time.
 ## 4. Attention: 
 Please note that "make023.bat" is the file used for batch submission in Abaqus. Please modify it according to the computer you are running this code and the version of Abaqus.
 ## 5. Run the Python File: 
-Execute the Python file.  
+Execute the Python file "ALLEXE.py".  
 <br>
 <br>
 
@@ -56,7 +56,7 @@ The folder named "example" contains an example. It contains all input files nece
 
 
 # References
-Tu S, Suzuki S, Yu Z, et al. Hybrid experimental-numerical strategy for efficiently and accurately identifying post-necking hardening and ductility diagram parameters[J]. International Journal of Mechanical Sciences, 2022, 219: 107074.
+[1] Tu S, Suzuki S, Yu Z, et al. Hybrid experimental-numerical strategy for efficiently and accurately identifying post-necking hardening and ductility diagram parameters[J]. International Journal of Mechanical Sciences, 2022, 219: 107074.
 
 
 
