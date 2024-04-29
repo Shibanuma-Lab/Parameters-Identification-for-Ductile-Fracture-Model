@@ -795,12 +795,7 @@ def ArcanStep(name, material, inpname, fs, iout, thresold, incnum, finc, mininc,
         sc0 = pd.read_csv(sc0_name)
         ud0 = pd.read_csv(ud0_name)
         ld0 = pd.read_csv(ld0_name)
-        if os.path.isfile(Best_fs_dat):
-            datdata = open(Best_fs_dat, "r", encoding='utf-8').readlines()
-            triaxiality = DAT_values(datdata, 19, 2)
-            eqplas = DAT_values(datdata, 13, 5)
-            ATRI = average_values(triaxiality, eqplas)
-        elif os.path.isfile("Results_fs.csv"):
+        if os.path.isfile("Results_fs.csv"):
             with open("Results_fs.csv", 'r') as csvfile:
                 reader = csv.reader(csvfile)
                 next(reader)
@@ -817,7 +812,11 @@ def ArcanStep(name, material, inpname, fs, iout, thresold, incnum, finc, mininc,
                 Best_result_fs = float(Best_fs[0])
                 Best_error_fs = float(Best_fs[1])
                 ATRI = float(Best_fs[2])
-
+        elif os.path.isfile(Best_fs_dat):
+            datdata = open(Best_fs_dat, "r", encoding='utf-8').readlines()
+            triaxiality = DAT_values(datdata, 19, 2)
+            eqplas = DAT_values(datdata, 13, 5)
+            ATRI = average_values(triaxiality, eqplas)
         else:
             TensileR_name = material + "_TensileR.csv"
             with open(TensileR_name, 'r') as csvfile:
@@ -1378,21 +1377,20 @@ def move_files_to_subfolder(subfolder_name, error, Nvalue, Avalue):
         Best_fs_dat = "_fs_" + str(Best_Nvalue) + ".dat"
         Best_fs_inp = "_fs_" + str(Best_Nvalue)
         fs_to_copy = [f for f in os.listdir(subfolder) if str(Best_fs_dat) in f]
-        for file in fs_to_copy:
+        fs_to_copy2 = [f for f in os.listdir(subfolder) if str(Best_fs_inp) in f]
+
+        for file in fs_to_copy2:
             source_path = os.path.join(subfolder, file)
             destination_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
             shutil.copy2(source_path, destination_path)
-            datdata = open(file, "r", encoding='utf-8').readlines()
+        for file in fs_to_copy:
+            destination_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+            datdata = open(destination_path, "r", encoding='utf-8').readlines()
             triaxiality = DAT_values(datdata, 19, 2)
             eqplas = DAT_values(datdata, 13, 5)
             ATRI = average_values(triaxiality, eqplas)
             Best_Avalue = ATRI
             print("    ATRI", ATRI)
-        fs_to_copy2 = [f for f in os.listdir(subfolder) if str(Best_fs_inp) in f]
-        for file in fs_to_copy2:
-            source_path = os.path.join(subfolder, file)
-            destination_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
-            shutil.copy2(source_path, destination_path)
     elif subfolder_name == 'b':
         print("BestResult:  B :", Best_Nvalue, "A :", Best_Avalue, end=" ")
         Best_inp = "_B_" + str(Best_Nvalue)
