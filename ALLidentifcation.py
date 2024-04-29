@@ -800,8 +800,7 @@ def ArcanStep(name, material, inpname, fs, iout, thresold, incnum, finc, mininc,
             triaxiality = DAT_values(datdata, 19, 2)
             eqplas = DAT_values(datdata, 13, 5)
             ATRI = average_values(triaxiality, eqplas)
-        elif os.path.isfile("Results_fs"):
-            datdata = open("Results_fs", "r", encoding='utf-8').readlines()
+        elif os.path.isfile("Results_fs.csv"):
             with open("Results_fs.csv", 'r') as csvfile:
                 reader = csv.reader(csvfile)
                 next(reader)
@@ -818,12 +817,14 @@ def ArcanStep(name, material, inpname, fs, iout, thresold, incnum, finc, mininc,
                 Best_result_fs = float(Best_fs[0])
                 Best_error_fs = float(Best_fs[1])
                 ATRI = float(Best_fs[2])
+
         else:
             TensileR_name = material + "_TensileR.csv"
             with open(TensileR_name, 'r') as csvfile:
                 reader = csv.reader(csvfile)
                 fs = float(next(reader)[0])
                 ATRI = float(next(reader)[0])
+        print("ATRI", ATRI)
 
         # Experimental data
         nstep0 = int(picnum) - 1
