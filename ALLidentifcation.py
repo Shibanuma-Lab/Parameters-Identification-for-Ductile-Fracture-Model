@@ -634,6 +634,27 @@ def ArcanStep(name, material, inpname, fs, iout, thresold, incnum, finc, mininc,
         print("Data_B.pkl already existed!    'Finish ArcanParametersProcessing")
         with open('Data_B.pkl', 'rb') as file:
             result = pickle.load(file)
+        ATRI_B = result.ATRI
+        if os.path.isfile("Results_fs.csv"):
+            with open("Results_fs.csv", 'r') as csvfile:
+                reader = csv.reader(csvfile)
+                next(reader)
+                data_fs = []
+                error_fs = []
+                for row in reader:
+                    try:
+                        data_fs.append(float(row[0]))
+                        error_fs.append(float(row[1]))
+                    except:
+                        next(reader)
+                        break
+                Best_fs = next(reader)
+                Best_result_fs = float(Best_fs[0])
+                Best_error_fs = float(Best_fs[1])
+                ATRI_fs = float(Best_fs[2])
+                if ATRI_fs != ATRI_B:
+                    result.ATRI = ATRI_fs
+                    print("Change ATRI from", ATRI_B, "to Result_fs.csv's value:", ATRI_fs)
     elif os.path.exists(os.path.join(os.path.dirname(__file__), 'b', 'Data_B.pkl')):
         print("Data_B.pkl already existed!    'Finish ArcanParametersProcessing")
         with open(os.path.join(os.path.dirname(__file__), 'b', 'Data_B.pkl'), 'rb') as file:
